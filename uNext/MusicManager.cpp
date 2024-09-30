@@ -1,5 +1,5 @@
 /************************
- * @author £ukasz Jakowski
+ * @author ï¿½ukasz Jakowski
  * @since  02.05.2014 16:13
  * 
  ************************/
@@ -21,8 +21,10 @@ MusicManager::~MusicManager(void) {
 /* ******************************************** */
 
 void MusicManager::PlayMusic() {
-	vMusic.push_back(Mix_LoadMUS("files/sounds/overworld.wav"));
-	vMusic.push_back(Mix_LoadMUS("files/sounds/overworld.wav"));
+    const std::string basePath = SDL_GetBasePath();
+
+    vMusic.push_back(Mix_LoadMUS((basePath + "files/sounds/overworld.wav").c_str()));
+    vMusic.push_back(Mix_LoadMUS((basePath + "files/sounds/overworld.wav").c_str()));
 	Mix_VolumeMusic(100);
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 	Mix_PlayMusic(vMusic[0], -1);
@@ -31,8 +33,12 @@ void MusicManager::PlayMusic() {
 /* ******************************************** */
 
 Mix_Music* MusicManager::loadMusic(std::string fileName) {
-	fileName = "files/sounds/" + fileName + ".wav";
-	return Mix_LoadMUS("files/sounds/overworld.wav");
+    const std::string basePath = SDL_GetBasePath();
+
+    fileName = basePath + "files/sounds/" + fileName + ".wav";
+    const std::string hardCodedWrongPath = basePath + "files/sounds/overworld.wav";
+
+    return Mix_LoadMUS(hardCodedWrongPath.c_str());
 }
 
 /* ******************************************** */

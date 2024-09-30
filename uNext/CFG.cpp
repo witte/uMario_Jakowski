@@ -19,7 +19,7 @@ Text* CCFG::oText = new Text();
 CIMG* CCFG::tSMBLOGO = new CIMG();
 
 MenuManager* CCFG::oMM = new MenuManager();
-Music* CCFG::oMusic = new Music();
+Music* CCFG::oMusic = nullptr;
 
 bool CCFG::keySpace = false;
 
@@ -42,6 +42,9 @@ MenuManager* CCFG::getMM() {
 }
 
 Music* CCFG::getMusic() {
+    if (!oMusic)
+        oMusic = new Music();
+    
 	return oMusic;
 }
 

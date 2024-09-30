@@ -157,12 +157,16 @@ void Music::PlayChunk(eChunk chunkID) {
 /* ******************************************** */
 
 Mix_Music* Music::loadMusic(std::string fileName) {
-	fileName = "files/sounds/" + fileName + ".wav";
+    const std::string basePath = SDL_GetBasePath();
+    fileName = basePath + "files/sounds/" + fileName + ".wav";
+
 	return Mix_LoadMUS(fileName.c_str());
 }
 
 Mix_Chunk* Music::loadChunk(std::string fileName) {
-	fileName = "files/sounds/" + fileName + ".wav";
+    const std::string basePath = SDL_GetBasePath();
+    fileName = basePath + "files/sounds/" + fileName + ".wav";
+
 	return Mix_LoadWAV(fileName.c_str());
 }
 

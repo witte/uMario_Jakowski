@@ -46,7 +46,8 @@ void CIMG::Draw(SDL_Renderer* rR, SDL_Rect rCrop, SDL_Rect rRect) {
 /* ******************************************** */
 
 void CIMG::setIMG(std::string fileName, SDL_Renderer* rR) {
-	fileName = "files/images/" + fileName + ".bmp";
+    const std::string basePath = SDL_GetBasePath();
+    fileName = basePath + "files/images/" + fileName + ".bmp";
 	SDL_Surface* loadedSurface = SDL_LoadBMP(fileName.c_str());
 	SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 255, 0, 255));
 

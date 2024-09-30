@@ -11,13 +11,12 @@ private:
 	SDL_Window* window;
 	SDL_Renderer* rR;
 	SDL_Event* mainEvent;
+	SDL_Joystick* joystick = nullptr;
 
 	// ----- FPS -----
 
-	long frameTime;
 	static const int MIN_FRAME_TIME = 16;
 
-	unsigned long lFPSTime;
 	int iNumOfFPS, iFPS;
 
 	// ----- FPS -----
@@ -39,6 +38,10 @@ private:
 	void MouseInput();
 	void InputPlayer();
 	void InputMenu();
+
+    void joystickAdded(int deviceIndex);
+
+
 public:
 	CCore(void);
 	~CCore(void);

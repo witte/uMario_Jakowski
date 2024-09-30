@@ -1,9 +1,12 @@
-cmake_minimum_required(VERSION 2.6)
-project(uMario)
+cmake_minimum_required(VERSION 3.25)
+project(uMario VERSION 1.0)
 
-# Use our modified FindSDL2* modules
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${uMario_SOURCE_DIR}/cmake")
-set(BIN_DIR ${uMario_SOURCE_DIR}/bin)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+include(cmake/SetupDependencies.cmake)
+
 
 # Bump up warning levels appropriately for clang, gcc & msvc and build in debug mode
 if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
@@ -21,15 +24,54 @@ endif()
 find_package(SDL2 REQUIRED)
 find_package(SDL2_Image REQUIRED)
 find_package(SDL2_Mixer REQUIRED)
-include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR} ${SDL2_MIXER_INCLUDE_DIR})
-
-file(COPY uNext/files DESTINATION .)
 
 include_directories(uNext)
 
+set(icon_file "${CMAKE_SOURCE_DIR}/uNext/files/images/ico.bmp")
+file(GLOB_RECURSE images "${CMAKE_SOURCE_DIR}/uNext/files/images/*.bmp")
+file(GLOB_RECURSE sounds "${CMAKE_SOURCE_DIR}/uNext/files/sounds/*.wav")
+
+if (CMAKE_SYSTEM_NAME STREQUAL "iOS")
+    set(RootResourcesFolder "")
+elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    set(RootResourcesFolder "Resources")
+endif()
+
+foreach (FILE ${images})
+    file(RELATIVE_PATH NEW_FILE "${CMAKE_SOURCE_DIR}/uNext" ${FILE})
+    get_filename_component(NEW_FILE_PATH ${NEW_FILE} DIRECTORY)
+    set_source_files_properties(${FILE}
+        PROPERTIES
+            MACOSX_PACKAGE_LOCATION "${RootResourcesFolder}/${NEW_FILE_PATH}"
+    )
+endforeach()
+
+foreach (FILE ${sounds})
+    file(RELATIVE_PATH NEW_FILE "${CMAKE_SOURCE_DIR}/uNext" ${FILE})
+    get_filename_component(NEW_FILE_PATH ${NEW_FILE} DIRECTORY)
+    set_source_files_properties(${FILE}
+        PROPERTIES
+            MACOSX_PACKAGE_LOCATION "${RootResourcesFolder}/${NEW_FILE_PATH}"
+    )
+endforeach()
+
 file(GLOB_RECURSE uMario_SOURCES "uNext/*.cpp")
-add_executable (uMario ${uMario_SOURCES})
+add_executable (uMario ${uMario_SOURCES}
+    ${icon_file} ${images} ${sounds}
+)
 
-target_link_libraries(uMario ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${SDL2_MIXER_LIBRARY})
+target_link_libraries(uMario SDL2::SDL2-static SDL2_image SDL2_mixer)
 
-install(TARGETS uMario RUNTIME DESTINATION ${BIN_DIR})
+set_target_properties(uMario PROPERTIES
+    BUNDLE True
+    MACOSX_BUNDLE True
+    MACOSX_BUNDLE_GUI_IDENTIFIER io.github.witte.uMario
+    MACOSX_BUNDLE_BUNDLE_NAME UMario
+    MACOSX_BUNDLE_BUNDLE_VERSION "0.1"
+    MACOSX_BUNDLE_SHORT_VERSION_STRING "0.1"
+)
+
+set_source_files_properties(${icon_file}
+    PROPERTIES
+        MACOSX_PACKAGE_LOCATION "${RootResourcesFolder}/files/images"
+)

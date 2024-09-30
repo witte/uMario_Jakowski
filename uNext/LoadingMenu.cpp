@@ -16,7 +16,9 @@ LoadingMenu::~LoadingMenu(void) {
 /* ******************************************** */
 
 void LoadingMenu::Update() {
-	if(SDL_GetTicks() >= iTime + 2500 + (loadingType ? 0 : 2750)) {
+	// TODO: allow configurable fake loading time
+	// if(SDL_GetTicks() >= iTime + 2500 + (loadingType ? 0 : 2750)) {
+	if (SDL_GetTicks() >= iTime + (loadingType ? 0 : 50)) {
 		if(loadingType) {
 			if(!CCore::getMap()->getInEvent()) {
 				CCore::getMap()->setSpawnPoint();
