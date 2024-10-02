@@ -23,7 +23,7 @@ BulletBillSpawner::BulletBillSpawner(int iXPos, int iYPos, int minionState) {
 	this->nextBulletBillFrameID = 12;
 }
 
-BulletBillSpawner::~BulletBillSpawner(void) {
+BulletBillSpawner::~BulletBillSpawner() {
 
 }
 

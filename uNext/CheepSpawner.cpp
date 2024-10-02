@@ -22,7 +22,7 @@ CheepSpawner::CheepSpawner(int iXPos, int iXEnd) {
 	srand((unsigned)time(NULL));
 }
 
-CheepSpawner::~CheepSpawner(void) {
+CheepSpawner::~CheepSpawner() {
 
 }
 

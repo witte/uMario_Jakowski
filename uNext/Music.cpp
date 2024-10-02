@@ -4,7 +4,7 @@
 
 /* ******************************************** */
 
-Music::Music(void) {
+Music::Music() {
 	// Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 	Mix_OpenAudio(0, nullptr);
 
@@ -55,7 +55,7 @@ Music::Music(void) {
 	this->currentMusic = mNOTHING;
 }
 
-Music::~Music(void) {
+Music::~Music() {
 	for(unsigned int i = 0; i < vMusic.size(); i++) {
 		Mix_FreeMusic(vMusic[i]);
 	}

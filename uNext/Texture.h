@@ -7,7 +7,7 @@ class Texture
 {
 public:
 	Texture(std::string fileName);
-	~Texture(void);
+	~Texture();
 
 	void Draw();
 	void Draw(int offsetX, int offsetY);

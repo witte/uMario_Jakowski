@@ -6,7 +6,7 @@
 
 /* ******************************************** */
 
-Map::Map(void) {
+Map::Map() {
 
 }
 
@@ -44,7 +44,7 @@ Map::Map(SDL_Renderer* rR) {
 	loadLVL();
 }
 
-Map::~Map(void) {
+Map::~Map() {
 	for(std::vector<Block*>::iterator i = vBlock.begin(); i != vBlock.end(); i++) {
 		delete (*i);
 	}

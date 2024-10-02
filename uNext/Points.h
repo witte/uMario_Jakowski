@@ -18,7 +18,7 @@ private:
 public:
 	Points(int iXPos, int iYPos, std::string sText);
 	Points(int iXPos, int iYPos, std::string sText, int iW, int iH);
-	~Points(void);
+	~Points();
 
 	void Update();
 	void Draw(SDL_Renderer* rR);

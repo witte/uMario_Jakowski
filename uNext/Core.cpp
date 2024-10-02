@@ -53,7 +53,7 @@ enum class DualSenseButtons {
 };
 
 
-CCore::CCore(void) {
+CCore::CCore() {
 	this->quitGame = false;
 	this->iFPS = 0;
 	this->iNumOfFPS = 0;
@@ -114,7 +114,7 @@ CCore::CCore(void) {
 	CCFG::keyIDShift = SDLK_LSHIFT;
 }
 
-CCore::~CCore(void) {
+CCore::~CCore() {
 	delete oMap;
 	delete mainEvent;
 	SDL_DestroyRenderer(rR);

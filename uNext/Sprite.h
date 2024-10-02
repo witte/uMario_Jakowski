@@ -22,9 +22,9 @@ private:
 	unsigned long lTimePassed;
 
 public:
-	Sprite(void);
+	Sprite();
 	Sprite(SDL_Renderer* rR, std::vector<std::string> tSprite, std::vector<unsigned int> iDelay, bool bRotate);
-	~Sprite(void);
+	~Sprite();
 
 	void Update();
 

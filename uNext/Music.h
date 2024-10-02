@@ -15,8 +15,8 @@ private:
 
 	int iVolume;
 public:
-	Music(void);
-	~Music(void);
+	Music();
+	~Music();
 
 	bool musicStopped;
 

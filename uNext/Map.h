@@ -7,42 +7,43 @@
 #include "IMG.h"
 #include "Block.h"
 #include "MapLevel.h"
-#include "Player.h"
-#include "PlayerFireBall.h"
+#include "Entities/Player.h"
+#include "Entities/PlayerFireBall.h"
 #include "Vector2.h"
 #include "LevelText.h"
-#include "Goombas.h"
-#include "Koppa.h"
-#include "Beetle.h"
-#include "Mushroom.h"
-#include "Flag.h"
-#include "Toad.h"
-#include "Bowser.h"
-#include "Plant.h"
-#include "Hammer.h"
-#include "HammerBro.h"
-#include "Star.h"
-#include "Cheep.h"
+#include "Entities/Goombas.h"
+#include "Entities/Koppa.h"
+#include "Entities/Beetle.h"
+#include "Entities/Mushroom.h"
+#include "Entities/Flag.h"
+#include "Entities/Toad.h"
+#include "Entities/Bowser.h"
+#include "Entities/Plant.h"
+#include "Entities/Hammer.h"
+#include "Entities/HammerBro.h"
+#include "Entities/Star.h"
+#include "Entities/Cheep.h"
 #include "CheepSpawner.h"
-#include "Squid.h"
-#include "Flower.h"
-#include "Lakito.h"
-#include "Spikey.h"
-#include "FireBall.h"
-#include "Fire.h"
-#include "Pipe.h"
-#include "Spring.h"
-#include "BulletBill.h"
+#include "Entities/Squid.h"
+#include "Entities/Flower.h"
+#include "Entities/Lakito.h"
+#include "Entities/Spikey.h"
+#include "Entities/FireBall.h"
+#include "Entities/Fire.h"
+#include "Entities/Pipe.h"
+#include "Entities/Spring.h"
+#include "Entities/BulletBill.h"
 #include "BulletBillSpawner.h"
-#include "Vine.h"
-#include "UpFire.h"
-#include "Platform.h"
+#include "Entities/Vine.h"
+#include "Entities/UpFire.h"
+#include "Entities/Platform.h"
 #include "Event.h"
-#include "Coin.h"
+#include "Entities/Coin.h"
 #include "Points.h"
-#include "BlockDebris.h"
-#include "Bubble.h"
+#include "Entities/BlockDebris.h"
+#include "Entities/Bubble.h"
 #include <vector>
+#include <Entities/Block.h>
 
 /* ******************************************** */
 
@@ -228,9 +229,9 @@ private:
 	void clearMap();
 	void clearMinions();
 public:
-	Map(void);
+	Map();
 	Map(SDL_Renderer* rR);
-	~Map(void);
+	~Map();
 
 	void Update();
 

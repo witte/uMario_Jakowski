@@ -43,8 +43,8 @@ private:
 
 
 public:
-	CCore(void);
-	~CCore(void);
+	CCore();
+	~CCore();
 
 	static bool quitGame;
 

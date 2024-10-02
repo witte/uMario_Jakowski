@@ -3,8 +3,9 @@
 
 # CMake
 build
-cmake-build*
+cmake-build-*
 
 # IDE's
 .idea
 *.txt.user
+.vscode

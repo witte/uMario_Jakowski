@@ -3,7 +3,7 @@
 #ifndef BULLETBILLSPAWNER_H
 #define BULLETBULLSPAWNER_H
 
-#include "Minion.h"
+#include "Entities/Minion.h"
 
 class BulletBillSpawner : public Minion
 {
@@ -11,7 +11,7 @@ private:
 	int nextBulletBillFrameID;
 public:
 	BulletBillSpawner(int iXPos, int iYPos, int minionState);
-	~BulletBillSpawner(void);
+	~BulletBillSpawner();
 
 	void Update();
 

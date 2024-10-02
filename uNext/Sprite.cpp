@@ -2,7 +2,7 @@
 
 /* ******************************************** */
 
-Sprite::Sprite(void) { }
+Sprite::Sprite() { }
 
 Sprite::Sprite(SDL_Renderer* rR, std::vector<std::string> sSprite, std::vector<unsigned int> iDelay, bool bRotate) {
 	this->iDelay = iDelay;
@@ -19,7 +19,7 @@ Sprite::Sprite(SDL_Renderer* rR, std::vector<std::string> sSprite, std::vector<u
 	this->lTimePassed = 0;
 }
 
-Sprite::~Sprite(void) {
+Sprite::~Sprite() {
 	for(std::vector<CIMG*>::iterator i = tSprite.begin(); i != tSprite.end(); i++) {
 		delete (*i);
 	}

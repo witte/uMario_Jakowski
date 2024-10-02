@@ -3,7 +3,7 @@
 
 /* ******************************************** */
 
-MenuManager::MenuManager(void) {
+MenuManager::MenuManager() {
 	this->currentGameState = eMainMenu;
 
 	this->oMainMenu = new MainMenu();
@@ -16,7 +16,7 @@ MenuManager::MenuManager(void) {
 }
 
 
-MenuManager::~MenuManager(void) {
+MenuManager::~MenuManager() {
 	delete activeOption;
 	delete oMainMenu;
 	delete oLoadingMenu;

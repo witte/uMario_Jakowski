@@ -2,13 +2,13 @@
 
 /* ******************************************** */
 
-CIMG::CIMG(void) { }
+CIMG::CIMG() { }
 
 CIMG::CIMG(std::string fileName, SDL_Renderer* rR) {
 	setIMG(fileName, rR);
 }
 
-CIMG::~CIMG(void) {
+CIMG::~CIMG() {
 	SDL_DestroyTexture(tIMG);
 }
 

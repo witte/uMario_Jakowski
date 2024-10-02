@@ -10,7 +10,7 @@ Texture::Texture(string fileName) {
 
 }
 
-Texture::~Texture(void) {
+Texture::~Texture() {
 	SDL_DestroyTexture(texture);
 }
 

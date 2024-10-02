@@ -3,7 +3,7 @@
 #ifndef CHEEPSPAWNER_H
 #define CHEEPSPAWNER_H
 
-#include "Minion.h"
+#include "Entities/Minion.h"
 
 class CheepSpawner : public Minion
 {
@@ -13,7 +13,7 @@ private:
 	unsigned int iSpawnTime;
 public:
 	CheepSpawner(int iXPos, int iXEnd);
-	~CheepSpawner(void);
+	~CheepSpawner();
 
 	void Update();
 	void minionPhysics();

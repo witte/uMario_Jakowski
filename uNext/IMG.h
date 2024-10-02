@@ -12,9 +12,9 @@ private:
 	SDL_FRect rRect;
 
 public:
-	CIMG(void);
+	CIMG();
 	CIMG(std::string fileName, SDL_Renderer* rR);
-	~CIMG(void);
+	~CIMG();
 
 	void Draw(SDL_Renderer * rR, int iXOffset, int iYOffset);
 	void Draw(SDL_Renderer * rR, int iXOffset, int iYOffset, bool bRoate);

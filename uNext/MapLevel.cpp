@@ -2,7 +2,7 @@
 
 /* ******************************************** */
 
-MapLevel::MapLevel(void) { }
+MapLevel::MapLevel() { }
 
 MapLevel::MapLevel(int iBlockID) {
 	this->iBlockID = iBlockID;
@@ -19,7 +19,7 @@ MapLevel::MapLevel(int iBlockID) {
 	this->powerUP = true;
 }
 
-MapLevel::~MapLevel(void) {
+MapLevel::~MapLevel() {
 
 }
 

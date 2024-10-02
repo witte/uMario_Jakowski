@@ -12,8 +12,8 @@ private:
 	bool bState; // true = OLD, false = NEW
 	unsigned int stepID;
 public:
-	Event(void);
-	~Event(void);
+	Event();
+	~Event();
 
 	enum animationType {
 		eTOP,

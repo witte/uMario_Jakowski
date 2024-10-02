@@ -1,5 +1,5 @@
 /************************
- * @author £ukasz Jakowski
+ * @author ï¿½ukasz Jakowski
  * @since  20.04.2014 14:32
  * 
  ************************/
@@ -34,7 +34,7 @@ Points::Points(int iXPos, int iYPos, std::string sText, int iW, int iH) {
 	this->bDelete = false;
 }
 
-Points::~Points(void) {
+Points::~Points() {
 	
 }
 

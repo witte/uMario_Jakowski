@@ -3,7 +3,7 @@
 
 /* ******************************************** */
 
-Text::Text(void) {
+Text::Text() {
 	rCrop.x = 0;
 	rCrop.y = 0;
 	rCrop.w = 16;
@@ -19,7 +19,7 @@ Text::Text(void) {
 	this->nextExtraLeft = 0;
 }
 
-Text::~Text(void) {
+Text::~Text() {
 	delete FONT;
 }
 

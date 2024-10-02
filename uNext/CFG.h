@@ -15,8 +15,8 @@ private:
 	static CIMG* tSMBLOGO;
 	static Music* oMusic;
 public:
-	CCFG(void);
-	~CCFG(void);
+	CCFG();
+	~CCFG();
 
 	static int GAME_WIDTH, GAME_HEIGHT;
 

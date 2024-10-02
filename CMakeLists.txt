@@ -56,7 +56,6 @@ add_executable (uMario ${uMario_SOURCES}
     ${icon_file} ${images} ${sounds}
 )
 
-#target_link_libraries(uMario SDL2::SDL2) # SDL2::SDL2_image SDL2::SDL2_mixer)
 target_link_libraries(uMario SDL3::SDL3-static SDL3_image::SDL3_image-static SDL3_mixer::SDL3_mixer-static)
 
 set_target_properties(uMario PROPERTIES

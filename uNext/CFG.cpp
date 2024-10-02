@@ -2,9 +2,9 @@
 
 /* ******************************************** */
 
-CCFG::CCFG(void) { }
+CCFG::CCFG() { }
 
-CCFG::~CCFG(void) {
+CCFG::~CCFG() {
 	delete oText;
 	delete oMM;
 	delete tSMBLOGO;

@@ -15,7 +15,7 @@ private:
 
 public:
 	LevelText(int iXPos, int iYPos, std::string sText);
-	~LevelText(void);
+	~LevelText();
 
 	int getXPos();
 	int getYPos();

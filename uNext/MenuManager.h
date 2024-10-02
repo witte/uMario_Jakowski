@@ -4,13 +4,11 @@
 #define MENUMANAGER_H
 
 #include "IMG.h"
-#include "MainMenu.h"
-#include "LoadingMenu.h"
-#include "AboutMenu.h"
-#include "Console.h"
-#include "LevelEditor.h"
-#include "OptionsMenu.h"
-#include "PauseMenu.h"
+#include "Menus/MainMenu.h"
+#include "Menus/LoadingMenu.h"
+#include "Menus/AboutMenu.h"
+#include "Menus/OptionsMenu.h"
+#include "Menus/PauseMenu.h"
 
 class MenuManager
 {
@@ -22,12 +20,10 @@ private:
 	AboutMenu* oAboutMenu;
 	OptionsMenu* oOptionsMenu;
 	PauseMenu* oPauseMenu;
-	//Console* oConsole;
-	//LevelEditor* oLE;
 
 public:
-	MenuManager(void);
-	~MenuManager(void);
+	MenuManager();
+	~MenuManager();
 
 	enum gameState {
 		eMainMenu,
@@ -36,7 +32,6 @@ public:
 		eAbout,
 		eOptions,
 		ePasue,
-		//eLevelEditor,
 	};
 
 	gameState currentGameState;
@@ -62,8 +57,6 @@ public:
 	LoadingMenu* getLoadingMenu();
 	AboutMenu* getAboutMenu();
 
-	//Console* getConsole();
-	//LevelEditor* getLE();
 	OptionsMenu* getOptions();
 };
 

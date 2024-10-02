@@ -22,9 +22,9 @@ private:
 	// ----- Animation -----
 
 public:
-	MapLevel(void);
+	MapLevel();
 	MapLevel(int iBlockID);
-	~MapLevel(void);
+	~MapLevel();
 
 	void startBlockAnimation();
 

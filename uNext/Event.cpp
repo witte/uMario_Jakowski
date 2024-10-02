@@ -3,7 +3,7 @@
 
 /* ******************************************** */
 
-Event::Event(void) {
+Event::Event() {
 	this->iDelay = 0;
 	this->newUnderWater = false;
 	this->endGame = false;
@@ -12,7 +12,7 @@ Event::Event(void) {
 	this->stepID = 0;
 }
 
-Event::~Event(void) {
+Event::~Event() {
 
 }
 

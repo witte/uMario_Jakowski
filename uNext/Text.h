@@ -21,8 +21,8 @@ private:
 	int getPos(int iChar);
 	void checkExtra(int iChar);
 public:
-	Text(void);
-	~Text(void);
+	Text();
+	~Text();
 
 	void Draw(SDL_Renderer* rR, std::string sText, int X, int Y, int fontSize = 16);
 	void Draw(SDL_Renderer* rR, std::string sText, int X, int Y, int fontSize, int iR, int iG, int iB);

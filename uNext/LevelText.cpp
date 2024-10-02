@@ -8,7 +8,7 @@ LevelText::LevelText(int iXPos, int iYPos, std::string sText) {
 	this->sText = sText;
 }
 
-LevelText::~LevelText(void) {
+LevelText::~LevelText() {
 
 }
 
