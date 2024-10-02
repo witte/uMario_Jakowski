@@ -11,7 +11,7 @@ private:
 	bool selectWorld;
 	int activeWorldID, activeSecondWorldID;
 
-	SDL_Rect rSelectWorld;
+	SDL_FRect rSelectWorld;
 public:
 	MainMenu(void);
 	~MainMenu(void);

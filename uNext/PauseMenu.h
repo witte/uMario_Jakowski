@@ -8,7 +8,7 @@
 class PauseMenu : public Menu
 {
 private:
-	SDL_Rect rPause;
+	SDL_FRect rPause;
 public:
 	PauseMenu(void);
 	~PauseMenu(void);

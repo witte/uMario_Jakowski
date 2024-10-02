@@ -8,10 +8,10 @@
 class OptionsMenu : public Menu
 {
 private:
-	SDL_Rect rRect;
-	SDL_Rect rSetKeyRect;
-	SDL_Rect rVolumeBG;
-	SDL_Rect rVolume;
+	SDL_FRect rRect;
+	SDL_FRect rSetKeyRect;
+	SDL_FRect rVolumeBG;
+	SDL_FRect rVolume;
 
 	bool inSetKey, resetSetKey;
 

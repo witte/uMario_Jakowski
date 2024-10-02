@@ -9,7 +9,7 @@
 class Console
 {
 private:
-	SDL_Rect rRect;
+	SDL_FRect rRect;
 
 	std::vector<std::string> vPrint;
 

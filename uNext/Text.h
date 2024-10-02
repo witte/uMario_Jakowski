@@ -11,8 +11,8 @@ class Text
 private:
 	CIMG* FONT;
 
-	SDL_Rect rCrop;
-	SDL_Rect rRect;
+	SDL_FRect rCrop;
+	SDL_FRect rRect;
 
 	int fontSize;
 	int extraLeft, nextExtraLeft;

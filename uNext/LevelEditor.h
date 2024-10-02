@@ -8,9 +8,9 @@
 class LevelEditor
 {
 private:
-	SDL_Rect rBlock;
+	SDL_FRect rBlock;
 
-	SDL_Rect rDrag;
+	SDL_FRect rDrag;
 
 	int currentBlockID;
 public:

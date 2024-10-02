@@ -48,7 +48,7 @@ void MainMenu::Draw(SDL_Renderer* rR) {
 		rSelectWorld.y += 1;
 		rSelectWorld.h -= 2;
 		rSelectWorld.w -= 2;
-		SDL_RenderDrawRect(rR, &rSelectWorld);
+		SDL_RenderRect(rR, &rSelectWorld);
 		rSelectWorld.x -= 1;
 		rSelectWorld.y -= 1;
 		rSelectWorld.h += 2;

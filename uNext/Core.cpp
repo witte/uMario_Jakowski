@@ -4,15 +4,15 @@
 #include "IMG.h"
 #include "CFG.h"
 #include "Text.h"
-#include "SDL_mixer.h"
+#include <SDL3_mixer/SDL_mixer.h>
 
 /* ******************************************** */
 
 Map* CCore::oMap = new Map();
 bool CCore::mouseLeftPressed = false;
 bool CCore::mouseRightPressed = false;
-int CCore::mouseX = 0;
-int CCore::mouseY = 0;
+float CCore::mouseX = 0;
+float CCore::mouseY = 0;
 bool CCore::quitGame = false;
 
 bool CCore::movePressed = false;
@@ -39,16 +39,16 @@ enum class DualSenseButtons {
     RIGHTSHOULDER = 14,
     PAUSE = 3,
 #else
-    DPAD_LEFT = SDL_CONTROLLER_BUTTON_DPAD_LEFT,
-    DPAD_UP = SDL_CONTROLLER_BUTTON_DPAD_UP,
-    DPAD_RIGHT = SDL_CONTROLLER_BUTTON_DPAD_RIGHT,
-    DPAD_DOWN = SDL_CONTROLLER_BUTTON_DPAD_DOWN,
-    X = SDL_CONTROLLER_BUTTON_A,
-    SQUARE = SDL_CONTROLLER_BUTTON_X,
-    CIRCLE = SDL_CONTROLLER_BUTTON_B,
-    TRIANGLE = SDL_CONTROLLER_BUTTON_Y,
-    RIGHTSHOULDER = SDL_CONTROLLER_BUTTON_RIGHTSHOULDER,
-    PAUSE = SDL_CONTROLLER_BUTTON_START,
+    DPAD_LEFT = SDL_GAMEPAD_BUTTON_DPAD_LEFT,
+    DPAD_UP = SDL_GAMEPAD_BUTTON_DPAD_UP,
+    DPAD_RIGHT = SDL_GAMEPAD_BUTTON_DPAD_RIGHT,
+    DPAD_DOWN = SDL_GAMEPAD_BUTTON_DPAD_DOWN,
+    X = SDL_GAMEPAD_BUTTON_SOUTH,
+    SQUARE = SDL_GAMEPAD_BUTTON_WEST,
+    CIRCLE = SDL_GAMEPAD_BUTTON_EAST,
+    TRIANGLE = SDL_GAMEPAD_BUTTON_NORTH,
+    RIGHTSHOULDER = SDL_GAMEPAD_BUTTON_RIGHT_SHOULDER,
+    PAUSE = SDL_GAMEPAD_BUTTON_START,
 #endif
 };
 
@@ -58,39 +58,42 @@ CCore::CCore(void) {
 	this->iFPS = 0;
 	this->iNumOfFPS = 0;
 
-	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK);
+	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK);
 	
-	window = SDL_CreateWindow("uMario - www.LukaszJakowski.pl", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, CCFG::GAME_WIDTH, CCFG::GAME_HEIGHT, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow("uMario - www.LukaszJakowski.pl", CCFG::GAME_WIDTH, CCFG::GAME_HEIGHT, 0);
 
 	if(window == NULL) {
 		quitGame = true;
 	}
 
-	if (SDL_NumJoysticks() >= 1) {
-		joystick = SDL_JoystickOpen(0);
+	if (SDL_HasJoystick() >= 1) {
+		joystick = SDL_OpenJoystick(0);
 		if (joystick == nullptr) {
 			std::cerr << "Could not open joystick! SDL Error: " << SDL_GetError() << std::endl;
 		}
 
-		std::cout << "Joystick connected: " << SDL_JoystickName(joystick) << std::endl;
-		std::cout << "Number of buttons: " << SDL_JoystickNumButtons(joystick) << std::endl;
+		std::cout << "Joystick connected: " << SDL_GetJoystickName(joystick) << std::endl;
+		std::cout << "Number of buttons: " << SDL_GetNumJoystickButtons(joystick) << std::endl;
 	}
 
-	rR = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	rR = SDL_CreateRenderer(window, nullptr);
 
 	// ----- ICO
     std::string fileName = SDL_GetBasePath();
     fileName += "files/images/ico.bmp";
 	SDL_Surface* loadedSurface = SDL_LoadBMP(fileName.c_str());
-	SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 255, 0, 255));
+	// SDL_SetSurfaceColorKey(loadedSurface, true, SDL_MapRGB(loadedSurface->format, 255, 0, 255));
+	SDL_SetSurfaceColorKey(loadedSurface, true, SDL_MapSurfaceRGB(loadedSurface, 255, 0, 255));
+
 
 	SDL_SetWindowIcon(window, loadedSurface);
-	SDL_FreeSurface(loadedSurface);
+	SDL_DestroySurface(loadedSurface);
 
 	mainEvent = new SDL_Event();
 	// ----- ICO
 	
-	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+	// Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+	Mix_OpenAudio(0, nullptr);
 	
 	oMap = new Map(rR);
 	CCFG::getMM()->setActiveOption(rR);
@@ -104,9 +107,9 @@ CCore::CCore(void) {
 
 	this->mouseX = this->mouseY = 0;
 
-	CCFG::keyIDA = SDLK_a;
-	CCFG::keyIDS = SDLK_s;
-	CCFG::keyIDD = SDLK_d;
+	CCFG::keyIDA = SDLK_A;
+	CCFG::keyIDS = SDLK_S;
+	CCFG::keyIDD = SDLK_D;
 	CCFG::keyIDSpace = SDLK_SPACE;
 	CCFG::keyIDShift = SDLK_LSHIFT;
 }
@@ -116,7 +119,7 @@ CCore::~CCore(void) {
 	delete mainEvent;
 	SDL_DestroyRenderer(rR);
 	SDL_DestroyWindow(window);
-	SDL_JoystickClose(joystick);
+	SDL_CloseJoystick(joystick);
 	SDL_Quit();
 
 	joystick = nullptr;
@@ -130,8 +133,8 @@ void CCore::mainLoop()
 	auto nextFrameTime = SDL_GetTicks() + MIN_FRAME_TIME;
 	auto frameTime = SDL_GetTicks();
 
-	while (!quitGame && mainEvent->type != SDL_QUIT) {
-        if (mainEvent->type == SDL_JOYDEVICEADDED)
+	while (!quitGame && mainEvent->type != SDL_EVENT_QUIT) {
+        if (mainEvent->type == SDL_EVENT_JOYSTICK_ADDED)
         {
             joystickAdded(mainEvent->jdevice.which);
         }
@@ -175,7 +178,7 @@ void CCore::Input() {
 }
 
 void CCore::InputMenu() {
-	if (mainEvent->type == SDL_JOYBUTTONDOWN) {
+	if (mainEvent->type == SDL_EVENT_JOYSTICK_BUTTON_DOWN) {
         switch (static_cast<DualSenseButtons>(mainEvent->jbutton.button)) {
             case DualSenseButtons::DPAD_LEFT:
 				if(!keyMenuPressed) {
@@ -221,17 +224,17 @@ void CCore::InputMenu() {
 		}
 	}
 
-	if(mainEvent->type == SDL_KEYDOWN) {
-		CCFG::getMM()->setKey(mainEvent->key.keysym.sym);
+	if(mainEvent->type == SDL_EVENT_KEY_DOWN) {
+		CCFG::getMM()->setKey(mainEvent->key.key);
 
-		switch(mainEvent->key.keysym.sym) {
-			case SDLK_s: case SDLK_DOWN:
+		switch(mainEvent->key.key) {
+			case SDLK_S: case SDLK_DOWN:
 				if(!keyMenuPressed) {
 					CCFG::getMM()->keyPressed(2);
 					keyMenuPressed = true;
 				}
 				break;
-			case SDLK_w: case SDLK_UP:
+			case SDLK_W: case SDLK_UP:
 				if(!keyMenuPressed) {
 					CCFG::getMM()->keyPressed(0);
 					keyMenuPressed = true;
@@ -249,13 +252,13 @@ void CCore::InputMenu() {
 					keyMenuPressed = true;
 				}
 				break;
-			case SDLK_LEFT: case SDLK_a:
+			case SDLK_LEFT: case SDLK_A:
 				if(!keyMenuPressed) {
 					CCFG::getMM()->keyPressed(3);
 					keyMenuPressed = true;
 				}
 				break;
-			case SDLK_RIGHT: case SDLK_d:
+			case SDLK_RIGHT: case SDLK_D:
 				if(!keyMenuPressed) {
 					CCFG::getMM()->keyPressed(1);
 					keyMenuPressed = true;
@@ -264,23 +267,23 @@ void CCore::InputMenu() {
 		}
 	}
 
-	else if (mainEvent->type == SDL_JOYBUTTONUP) {
+	else if (mainEvent->type == SDL_EVENT_JOYSTICK_BUTTON_UP) {
 		keyMenuPressed = false;
 	}
 
-	if(mainEvent->type == SDL_KEYUP) {
-		switch(mainEvent->key.keysym.sym) {
-			case SDLK_s:
+	if(mainEvent->type == SDL_EVENT_KEY_UP) {
+		switch(mainEvent->key.key) {
+			case SDLK_S:
 			case SDLK_DOWN:
-			case SDLK_w:
+			case SDLK_W:
 			case SDLK_UP:
 			case SDLK_KP_ENTER:
 			case SDLK_RETURN:
 			case SDLK_ESCAPE:
-			case SDLK_a:
+			case SDLK_A:
 			case SDLK_RIGHT:
 			case SDLK_LEFT:
-			case SDLK_d:
+			case SDLK_D:
 				keyMenuPressed = false;
 				break;
 			default:
@@ -290,7 +293,7 @@ void CCore::InputMenu() {
 }
 
 void CCore::joystickAdded(int deviceIndex) {
-    SDL_Joystick* newJoystick = SDL_JoystickOpen(deviceIndex);
+    SDL_Joystick* newJoystick = SDL_OpenJoystick(deviceIndex);
 
     if (newJoystick) {
         joystick = newJoystick;
@@ -300,18 +303,16 @@ void CCore::joystickAdded(int deviceIndex) {
 }
 
 void CCore::InputPlayer() {
-	if(mainEvent->type == SDL_WINDOWEVENT) {
-		switch(mainEvent->window.event) {
-			case SDL_WINDOWEVENT_FOCUS_LOST:
-				CCFG::getMM()->resetActiveOptionID(CCFG::getMM()->ePasue);
-				CCFG::getMM()->setViewID(CCFG::getMM()->ePasue);
-				CCFG::getMusic()->PlayChunk(CCFG::getMusic()->cPASUE);
-				CCFG::getMusic()->PauseMusic();
-				break;
-		}
+	// if(mainEvent->type == SDL_WINDOWEVENT) {
+	if (mainEvent->type == SDL_EVENT_WINDOW_FOCUS_LOST)
+	{
+		CCFG::getMM()->resetActiveOptionID(CCFG::getMM()->ePasue);
+		CCFG::getMM()->setViewID(CCFG::getMM()->ePasue);
+		CCFG::getMusic()->PlayChunk(CCFG::getMusic()->cPASUE);
+		CCFG::getMusic()->PauseMusic();
 	}
 
-	else if (mainEvent->type == SDL_JOYBUTTONDOWN) {
+	else if (mainEvent->type == SDL_EVENT_JOYSTICK_BUTTON_DOWN) {
         switch (static_cast<DualSenseButtons>(mainEvent->jbutton.button)) {
             case DualSenseButtons::DPAD_LEFT:
 				keyAPressed = true;
@@ -365,7 +366,7 @@ void CCore::InputPlayer() {
 				break;
 		}
 	}
-	else if (mainEvent->type == SDL_JOYBUTTONUP) {
+	else if (mainEvent->type == SDL_EVENT_JOYSTICK_BUTTON_UP) {
         switch (static_cast<DualSenseButtons>(mainEvent->jbutton.button)) {
             case DualSenseButtons::DPAD_LEFT: // left
 				keyAPressed = false;
@@ -404,8 +405,8 @@ void CCore::InputPlayer() {
 		}
 	}
 
-	if(mainEvent->type == SDL_KEYUP) {
-		if(mainEvent->key.keysym.sym == CCFG::keyIDD) {
+	if(mainEvent->type == SDL_EVENT_KEY_UP) {
+		if(mainEvent->key.key == CCFG::keyIDD) {
 				if(firstDir) {
 					firstDir = false;
 				}
@@ -413,12 +414,12 @@ void CCore::InputPlayer() {
 				keyDPressed = false;
 			}
 
-			if(mainEvent->key.keysym.sym == CCFG::keyIDS) {
+			if(mainEvent->key.key == CCFG::keyIDS) {
 				oMap->getPlayer()->setSquat(false);
 				keyS = false;
 			}
 		
-			if(mainEvent->key.keysym.sym == CCFG::keyIDA) {
+			if(mainEvent->key.key == CCFG::keyIDA) {
 				if(!firstDir) {
 					firstDir = true;
 				}
@@ -426,60 +427,60 @@ void CCore::InputPlayer() {
 				keyAPressed = false;
 			}
 		
-			if(mainEvent->key.keysym.sym == CCFG::keyIDSpace) {
+			if(mainEvent->key.key == CCFG::keyIDSpace) {
 				CCFG::keySpace = false;
 			}
 		
-			if(mainEvent->key.keysym.sym == CCFG::keyIDShift) {
+			if(mainEvent->key.key == CCFG::keyIDShift) {
 				if(keyShift) {
 					oMap->getPlayer()->resetRun();
 					keyShift = false;
 				}
 			}
-		switch(mainEvent->key.keysym.sym) {
+		switch(mainEvent->key.key) {
 			case SDLK_KP_ENTER: case SDLK_RETURN: case SDLK_ESCAPE:
 				keyMenuPressed = false;
 				break;
 		}
 	}
 
-	if(mainEvent->type == SDL_KEYDOWN) {
-		if(mainEvent->key.keysym.sym == CCFG::keyIDD) {
+	if(mainEvent->type == SDL_EVENT_KEY_DOWN) {
+		if(mainEvent->key.key == CCFG::keyIDD) {
 			keyDPressed = true;
 			if(!keyAPressed) {
 				firstDir = true;
 			}
 		}
 
-        if(mainEvent->key.keysym.sym == CCFG::keyIDS) {
+        if(mainEvent->key.key == CCFG::keyIDS) {
 			if(!keyS) {
 				keyS = true;
 				if(!oMap->getUnderWater() && !oMap->getPlayer()->getInLevelAnimation()) oMap->getPlayer()->setSquat(true);
 			}
 		}
 		
-        if(mainEvent->key.keysym.sym == CCFG::keyIDA) {
+        if(mainEvent->key.key == CCFG::keyIDA) {
 			keyAPressed = true;
 			if(!keyDPressed) {
 				firstDir = false;
 			}
 		}
 		
-        if(mainEvent->key.keysym.sym == CCFG::keyIDSpace) {
+        if(mainEvent->key.key == CCFG::keyIDSpace) {
 			if(!CCFG::keySpace) {
 				oMap->getPlayer()->jump();
 				CCFG::keySpace = true;
 			}
 		}
 		
-        if(mainEvent->key.keysym.sym == CCFG::keyIDShift) {
+        if(mainEvent->key.key == CCFG::keyIDShift) {
 			if(!keyShift) {
 				oMap->getPlayer()->startRun();
 				keyShift = true;
 			}
 		}
 
-		switch(mainEvent->key.keysym.sym) {
+		switch(mainEvent->key.key) {
 			case SDLK_KP_ENTER: case SDLK_RETURN:
 				if(!keyMenuPressed) {
 					CCFG::getMM()->enter();
@@ -523,7 +524,7 @@ void CCore::InputPlayer() {
 
 void CCore::MouseInput() {
 	switch(mainEvent->type) {
-		case SDL_MOUSEBUTTONDOWN: {
+		case SDL_EVENT_MOUSE_BUTTON_DOWN: {
 			switch (mainEvent->button.button) {
 				case SDL_BUTTON_LEFT:
 					mouseLeftPressed = true;
@@ -534,14 +535,14 @@ void CCore::MouseInput() {
 			}
 			break;
 		}
-		case SDL_MOUSEMOTION: {
+		case SDL_EVENT_MOUSE_MOTION: {
 			
 			SDL_GetMouseState(&mouseX, &mouseY);
 			//CCFG::getMM()->getConsole()->print("x:" + std::to_string(mouseX));
 			//CCFG::getMM()->getConsole()->print("y:" + std::to_string(mouseY));
 			break;
 		}
-		case SDL_MOUSEBUTTONUP: {
+		case SDL_EVENT_MOUSE_BUTTON_UP: {
 			switch (mainEvent->button.button) {
 				case SDL_BUTTON_LEFT:
 					mouseLeftPressed = false;
@@ -552,7 +553,7 @@ void CCore::MouseInput() {
 			}
 			break;
 		}
-		case SDL_MOUSEWHEEL:
+		case SDL_EVENT_MOUSE_WHEEL:
 			if(mainEvent->wheel.timestamp > SDL_GetTicks() - 2) {
 				//CCFG::getMM()->getLE()->mouseWheel(mainEvent->wheel.y);
 			}

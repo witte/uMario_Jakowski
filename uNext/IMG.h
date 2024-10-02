@@ -9,7 +9,7 @@ class CIMG
 {
 private:
 	SDL_Texture* tIMG;
-	SDL_Rect rRect;
+	SDL_FRect rRect;
 
 public:
 	CIMG(void);
@@ -19,12 +19,12 @@ public:
 	void Draw(SDL_Renderer * rR, int iXOffset, int iYOffset);
 	void Draw(SDL_Renderer * rR, int iXOffset, int iYOffset, bool bRoate);
 	void DrawVert(SDL_Renderer * rR, int iXOffset, int iYOffset);
-	void Draw(SDL_Renderer * rR, SDL_Rect rCrop, SDL_Rect rRect);
+	void Draw(SDL_Renderer * rR, SDL_FRect rCrop, SDL_FRect rRect);
 
 	/* ----- get & set ----- */
 	SDL_Texture* getIMG();
 	void setIMG(std::string fileName, SDL_Renderer* rR);
-	SDL_Rect getRect();
+	SDL_FRect getRect();
 };
 
 #endif

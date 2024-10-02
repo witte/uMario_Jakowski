@@ -26,7 +26,7 @@ void MusicManager::PlayMusic() {
     vMusic.push_back(Mix_LoadMUS((basePath + "files/sounds/overworld.wav").c_str()));
     vMusic.push_back(Mix_LoadMUS((basePath + "files/sounds/overworld.wav").c_str()));
 	Mix_VolumeMusic(100);
-	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+	Mix_OpenAudio(0, nullptr);
 	Mix_PlayMusic(vMusic[0], -1);
 }
 

@@ -1,11 +1,12 @@
 #include "Music.h"
 #include "Core.h"
-#include "SDL_mixer.h"
+#include <SDL3_mixer/SDL_mixer.h>
 
 /* ******************************************** */
 
 Music::Music(void) {
-	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+	// Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+	Mix_OpenAudio(0, nullptr);
 
 	vMusic.push_back(loadMusic("overworld"));
 	vMusic.push_back(loadMusic("overworld-fast"));

@@ -467,11 +467,11 @@ void Map::DrawLines(SDL_Renderer* rR) {
 	SDL_SetRenderDrawColor(rR, 255, 255, 255, 128);
 
 	for(int i = 0; i < CCFG::GAME_WIDTH / 32 + 1; i++) {
-		SDL_RenderDrawLine(rR, 32 * i - (-(int)fXPos) % 32, 0, 32 * i - (-(int)fXPos) % 32, CCFG::GAME_HEIGHT);
+		SDL_RenderLine(rR, 32 * i - (-(int)fXPos) % 32, 0, 32 * i - (-(int)fXPos) % 32, CCFG::GAME_HEIGHT);
 	}
 
 	for(int i = 0; i < CCFG::GAME_HEIGHT / 32 + 1; i++) {
-		SDL_RenderDrawLine(rR, 0, 32 * i - 16 + (int)fYPos, CCFG::GAME_WIDTH, 32 * i - 16 + (int)fYPos);
+		SDL_RenderLine(rR, 0, 32 * i - 16 + (int)fYPos, CCFG::GAME_WIDTH, 32 * i - 16 + (int)fYPos);
 	}
 
 	for(int i = 0; i < CCFG::GAME_WIDTH / 32 + 1; i++) {

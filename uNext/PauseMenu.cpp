@@ -38,7 +38,7 @@ void PauseMenu::Draw(SDL_Renderer* rR) {
 	rPause.y += 1;
 	rPause.h -= 2;
 	rPause.w -= 2;
-	SDL_RenderDrawRect(rR, &rPause);
+	SDL_RenderRect(rR, &rPause);
 	rPause.x -= 1;
 	rPause.y -= 1;
 	rPause.h += 2;

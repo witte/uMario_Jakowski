@@ -20,8 +20,8 @@ void LevelEditor::Update() {
 		rDrag.w = CCore::mouseX - rDrag.x;
 		rDrag.h = CCore::mouseY - rDrag.y;
 	} else {
-		rBlock.x = CCore::mouseX - (-(int)CCore::getMap()->getXPos() + CCore::mouseX)%32;
-		rBlock.y = CCore::mouseY - (CCore::mouseY - 16)%32;
+		rBlock.x = CCore::mouseX - (int(-CCore::getMap()->getXPos() + CCore::mouseX) % 32);
+		rBlock.y = CCore::mouseY - (int(CCore::mouseY - 16) % 32);
 		rBlock.w = rBlock.h = 32;
 
 		rDrag.x = CCore::mouseX;
@@ -42,10 +42,10 @@ void LevelEditor::Draw(SDL_Renderer* rR) {
 		SDL_SetRenderDrawColor(rR, 242, 242, 242, 78);
 		SDL_RenderFillRect(rR, &rDrag);
 		SDL_SetRenderDrawColor(rR, 255, 255, 255, 235);
-		SDL_RenderDrawRect(rR, &rDrag);
+		SDL_RenderRect(rR, &rDrag);
 	} else {
 		CCore::getMap()->getBlock(currentBlockID)->getSprite()->getTexture()->Draw(rR, rBlock.x, rBlock.y);
-		SDL_RenderDrawRect(rR, &rBlock);
+		SDL_RenderRect(rR, &rBlock);
 	}
 
 	SDL_SetTextureAlphaMod(CCore::getMap()->getBlock(currentBlockID)->getSprite()->getTexture()->getIMG(), 255);
@@ -76,8 +76,8 @@ void LevelEditor::editMap() {
 /* ******************************************** */
 
 void LevelEditor::drawStruct(SDL_Renderer* rR) {
-	int W = CCore::mouseX - CCore::mouseX%32 - rDrag.x + rDrag.x%32;
-	int H = CCore::mouseY - (CCore::mouseY - 16)%32 - rDrag.y + rDrag.y%32;
+	int W = CCore::mouseX - (int)CCore::mouseX%32 - rDrag.x + (int)rDrag.x%32;
+	int H = CCore::mouseY - int(CCore::mouseY - 16)%32 - rDrag.y + (int)rDrag.y%32;
 	W += W > 0 ? 32 : 0;
 	H += H > 0 ? 32 : -32;
 

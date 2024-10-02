@@ -24,7 +24,7 @@ void Console::Draw(SDL_Renderer* rR) {
 		SDL_SetRenderDrawColor(rR, 4, 4, 4, 128);
 		SDL_RenderFillRect(rR, &rRect);
 		SDL_SetRenderDrawColor(rR, 255, 255, 255, 128);
-		SDL_RenderDrawRect(rR, &rRect);
+		SDL_RenderRect(rR, &rRect);
 		SDL_SetRenderDrawColor(rR, 255, 255, 255, 255);
 	
 		for(int i = vPrint.size() - 1, j = 0; i >= 0; i--, j++) {

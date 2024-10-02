@@ -63,7 +63,7 @@ void OptionsMenu::Draw(SDL_Renderer* rR) {
 	rRect.y += 1;
 	rRect.h -= 2;
 	rRect.w -= 2;
-	SDL_RenderDrawRect(rR, &rRect);
+	SDL_RenderRect(rR, &rRect);
 	rRect.x -= 1;
 	rRect.y -= 1;
 	rRect.h += 2;
@@ -85,10 +85,10 @@ void OptionsMenu::Draw(SDL_Renderer* rR) {
 
 	if(activeMenuOption == 0) {
 		SDL_SetRenderDrawColor(rR, 255, 255, 255, 255);
-		SDL_RenderDrawRect(rR, &rVolumeBG);
+		SDL_RenderRect(rR, &rVolumeBG);
 	} else {
 		SDL_SetRenderDrawColor(rR, 160, 160, 160, 55);
-		SDL_RenderDrawRect(rR, &rVolumeBG);
+		SDL_RenderRect(rR, &rVolumeBG);
 	}
 
 	CCFG::getText()->Draw(rR, CCFG::getKeyString(CCFG::keyIDA), 185, 89, 16, activeMenuOption == 1 ? 255 : 90, activeMenuOption == 1 ? 255 : 90, activeMenuOption == 1 ? 255 : 90);
@@ -107,7 +107,7 @@ void OptionsMenu::Draw(SDL_Renderer* rR) {
 		rSetKeyRect.y += 1;
 		rSetKeyRect.h -= 2;
 		rSetKeyRect.w -= 2;
-		SDL_RenderDrawRect(rR, &rSetKeyRect);
+		SDL_RenderRect(rR, &rSetKeyRect);
 		rSetKeyRect.x -= 1;
 		rSetKeyRect.y -= 1;
 		rSetKeyRect.h += 2;

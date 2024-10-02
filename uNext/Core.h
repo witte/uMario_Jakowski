@@ -57,7 +57,7 @@ public:
 	static void resetKeys();
 
 	static bool mouseLeftPressed, mouseRightPressed;
-	static int mouseX, mouseY;
+	static float mouseX, mouseY;
 	
 	/* ----- get & set ----- */
 	static Map* getMap();
