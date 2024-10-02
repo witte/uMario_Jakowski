@@ -6,8 +6,8 @@
 Text::Text(void) {
 	rCrop.x = 0;
 	rCrop.y = 0;
-	rCrop.w = 8;
-	rCrop.h = 8;
+	rCrop.w = 16;
+	rCrop.h = 16;
 
 	rRect.x = 0;
 	rRect.y = 0;
